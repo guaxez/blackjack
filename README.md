@@ -8,7 +8,7 @@ Jogo de Cartas 21
 ## Back-end
 
 - [50%] Cartas
-- [20%] Baralho
+- [30%] Baralho
 - [] Mão
 - [] Dinheiro
 - [] Rodadas
