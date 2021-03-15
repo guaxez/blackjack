@@ -32,8 +32,18 @@ class Carta():
     def __str__(self):
         return '{} de {}'.format(self.numero,self.naipe)
 
+class Baralho():
+    def __init__(self):
+        self.pilha = []
+        
+        for i in ('O','E','C','P'):
+            for j in range(1,14):
+                self.pilha.append(Carta(j,i))
 
 print('21')
 
-a = Carta(1,'C')
-print(a)
+b = Baralho()
+for k in b.pilha:
+    print(str(k))
+
+print(len(b.pilha))

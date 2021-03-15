@@ -7,7 +7,7 @@ GUI tkinter
 # Projeto
 
 - [50%] Cartas
-- [] Baralho
+- [20%] Baralho
 - [] Mão
 - [] Dinheiro
 - [] Rodadas
