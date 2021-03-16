@@ -5,12 +5,12 @@ Jogo de Cartas 21
 
 # Projeto
 
-- [50%] Cartas
+- [30%] Cartas
 - [30%] Baralho
 - [] Mão
-- [] Dinheiro
+- [] Jogador
 - [] Rodadas
-
+- [] Menu
 
 # Log
 
