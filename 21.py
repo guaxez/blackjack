@@ -43,7 +43,7 @@ class Baralho():
     
     def mostrar_baralho(self):
         for k in self.pilha:
-            print(str(k))
+            print(k)
     
     def embaralhar(self):
         random.shuffle(self.pilha)
@@ -51,6 +51,7 @@ class Baralho():
 
 
 # MAIN
+
 print('21')
 b = Baralho()
 print('tamanho do baralho: {}'.format(len(b.pilha)))
