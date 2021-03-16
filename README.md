@@ -5,23 +5,11 @@ Jogo de Cartas 21
 
 # Projeto
 
-## Back-end
-
 - [50%] Cartas
 - [30%] Baralho
 - [] Mão
 - [] Dinheiro
 - [] Rodadas
-
-## Front-end
-
-GUI tkinter
-
-- [] mão
-- [] banca
-- [] aposta (botões)
-- [] dinheiro
-
 
 
 # Log
