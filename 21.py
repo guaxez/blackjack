@@ -49,8 +49,14 @@ class Baralho():
     def embaralhar(self):
         random.shuffle(self.pilha)
     
+    def tamanho_baralho(self):
+        return 'tamanho do baralho: {}'.format(len(b.pilha))
+    
     def dar_carta(self,quem):
-        quem.mao.append(self.pilha.pop())
+        quem.mao.append(self.pilha[-1])
+        self.pilha.pop()
+        print(self.tamanho_baralho())
+        quem.status()
 
 class Jogador():
 
@@ -59,11 +65,15 @@ class Jogador():
         self.mao = []
         self.dinheiro = 500
     
+    def mostra_mao(self):
+        if len(self.mao) >= 1:
+            for carta in self.mao():
+                print(carta)
+        else:
+            print('Mão vazia')
+
     def status(self):
-        print(self.nome, self.dinheiro, self.mao)
-
-
-
+        print('{} {} {}'.format(self.nome, self.dinheiro, self.mao))
 
 
 
@@ -71,8 +81,9 @@ class Jogador():
 
 print('21')
 b = Baralho()
-print('tamanho do baralho: {}'.format(len(b.pilha)))
+print(b.tamanho_baralho())
 
 jogador = Jogador('Jogador')
 jogador.status()
 
+b.dar_carta(jogador)
