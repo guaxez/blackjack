@@ -66,11 +66,9 @@ class Jogador():
         self.dinheiro = 500
     
     def mostra_mao(self):
-        if len(self.mao) >= 1:
-            for carta in self.mao():
-                print(carta)
-        else:
-            print('Mão vazia')
+        for c in self.mao:
+            print(c)
+
 
     def status(self):
         print('{} {} {}'.format(self.nome, self.dinheiro, self.mao))
@@ -81,9 +79,11 @@ class Jogador():
 
 print('21')
 b = Baralho()
+b.embaralhar()
 print(b.tamanho_baralho())
 
 jogador = Jogador('Jogador')
 jogador.status()
 
 b.dar_carta(jogador)
+jogador.mostra_mao()
