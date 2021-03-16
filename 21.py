@@ -54,9 +54,14 @@ class Baralho():
 
 class Jogador():
 
-    def __init__(self):
+    def __init__(self,nome):
+        self.nome = nome
         self.mao = []
         self.dinheiro = 500
+    
+    def status(self):
+        print(self.nome, self.dinheiro, self.mao)
+
 
 
 
@@ -68,8 +73,6 @@ print('21')
 b = Baralho()
 print('tamanho do baralho: {}'.format(len(b.pilha)))
 
-jogador = Jogador()
-print(jogador.dinheiro,jogador.mao)
+jogador = Jogador('Jogador')
+jogador.status()
 
-
-print
