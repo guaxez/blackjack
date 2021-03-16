@@ -5,9 +5,9 @@ Jogo de Cartas 21
 
 # Projeto
 
-- [30%] Cartas
-- [30%] Baralho
-- [] Mão
+- [35%] Cartas
+- [40%] Baralho
+- [30%] Mão
 - [] Jogador
 - [] Rodadas
 - [] Menu
