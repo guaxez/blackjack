@@ -34,6 +34,7 @@ class Carta():
         return '{} de {}'.format(self.numero,self.naipe)
 
 class Baralho():
+
     def __init__(self):
         self.pilha = []
         
@@ -47,6 +48,17 @@ class Baralho():
     
     def embaralhar(self):
         random.shuffle(self.pilha)
+    
+    def dar_carta(self,quem):
+        quem.mao.append(self.pilha.pop())
+
+class Jogador():
+
+    def __init__(self):
+        self.mao = []
+        self.dinheiro = 500
+
+
 
 
 
@@ -55,7 +67,9 @@ class Baralho():
 print('21')
 b = Baralho()
 print('tamanho do baralho: {}'.format(len(b.pilha)))
-b.mostrar_baralho()
-print('EMBARALHAR!\n\n\n')
-b.embaralhar()
-b.mostrar_baralho()
+
+jogador = Jogador()
+print(jogador.dinheiro,jogador.mao)
+
+
+print
