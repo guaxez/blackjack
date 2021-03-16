@@ -27,11 +27,13 @@ class Carta():
 
 
     def __init__(self, num, tipo):
-        self.numero = self.tipos[str(num)]
-        self.naipe = self.tipos[str(tipo)]
+        self.numero = num
+        self.naipe = tipo
+        self.st_num = self.tipos[str(num)]
+        self.st_tipo = self.tipos[str(tipo)]
 
     def __str__(self):
-        return '{} de {}'.format(self.numero,self.naipe)
+        return '{} de {}'.format(self.st_num,self.st_tipo)
 
 class Baralho():
 
@@ -65,13 +67,26 @@ class Jogador():
         self.mao = []
         self.dinheiro = 500
     
+    def status(self):
+        print('{} {} {}'.format(self.nome, self.dinheiro, self.mao))
+    
     def mostra_mao(self):
         for c in self.mao:
             print(c)
+        print(self.valor_mao())
+        
+    
+    def valor_mao(self):
+        valor = 0
+        for c in self.mao:
+            if c.numero == 1:
+                valor += 11
+            elif c.numero <= 10:
+                valor += int(c.numero)
+            else:
+                valor += 10
+        return valor
 
-
-    def status(self):
-        print('{} {} {}'.format(self.nome, self.dinheiro, self.mao))
 
 
 
@@ -85,5 +100,6 @@ print(b.tamanho_baralho())
 jogador = Jogador('Jogador')
 jogador.status()
 
+b.dar_carta(jogador)
 b.dar_carta(jogador)
 jogador.mostra_mao()
