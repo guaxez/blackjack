@@ -80,7 +80,10 @@ class Jogador():
         valor = 0
         for c in self.mao:
             if c.numero == 1:
-                valor += 11
+                if self.valor_mao() < 10:
+                    valor += 11 #o ás pode ser 1 ou 11, tenho que resolver isso. será que assim está bom?
+                else:
+                    valor += 1
             elif c.numero <= 10:
                 valor += int(c.numero)
             else:
