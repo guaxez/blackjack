@@ -79,15 +79,12 @@ class Jogador():
     def valor_mao(self):
         valor = 0
         for c in self.mao:
-            if c.numero == 1:
-                if self.valor_mao() < 10:
-                    valor += 11 #o ás pode ser 1 ou 11, tenho que resolver isso. será que assim está bom?
-                else:
-                    valor += 1
-            elif c.numero <= 10:
+            if c.numero >= 10:
+                valor += 10
+            elif c.numero > 1 and c.numero < 10:
                 valor += int(c.numero)
             else:
-                valor += 10
+                valor += 11 #o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta.
         return valor
 
 
