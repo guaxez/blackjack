@@ -32,7 +32,7 @@ class Carta():
         self.st_num = self.tipos[str(num)]
         self.st_tipo = self.tipos[str(tipo)]
 
-    def __str__(self):
+    def __repr__(self):
         return '{} de {}'.format(self.st_num,self.st_tipo)
 
 class Baralho():
@@ -57,6 +57,7 @@ class Baralho():
     def dar_carta(self,quem):
         quem.mao.append(self.pilha[-1])
         self.pilha.pop()
+        quem.valor = quem.valor_mao()
         print(self.tamanho_baralho())
         quem.status()
 
@@ -67,11 +68,12 @@ class Jogador():
         self.mao = []
         self.dinheiro = 500
         self.aposta = 0
+        self.valor = 0
     
     def status(self):
-        print('{} $:{} AP:{} M:{}'.format(self.nome, self.dinheiro, self.aposta, self.mao))
+        print('{} $:{} AP:{} M:{} V:{}'.format(self.nome, self.dinheiro, self.aposta, self.mao,self.valor))
     
-    def mostra_mao(self):
+    def mostra_mao(self): # agora que eu mudei o __str__ das cartas para __repr__, acho que nao preciso mais disso. mas vou deixar por enquanto
         for c in self.mao:
             print(c)
         print(self.valor_mao())
@@ -85,13 +87,12 @@ class Jogador():
             elif c.numero > 1 and c.numero < 10:
                 valor += int(c.numero)
             else:
-                valor += 11 #o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta antes.
+                valor += 11 # o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta antes.
         return valor
     
     def apostar(self,valor=10):
         self.dinheiro -= valor
         self.aposta += valor
-        print(self.dinheiro)
 
 
 
@@ -107,7 +108,6 @@ jogador = Jogador('Jogador')
 jogador.status()
 jogador.apostar()
 
+print('Dar cartas')
 b.dar_carta(jogador)
 b.dar_carta(jogador)
-jogador.mostra_mao()
-

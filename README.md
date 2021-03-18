@@ -8,8 +8,8 @@ Jogo de Cartas 21
 - [35%] Cartas
 - [40%] Baralho
 - [30%] Mão
-- [50%] Jogador
-- [] Rodadas
+- [40%] Jogador
+- [10%] Rodadas
 - [] Menu
 
 # Log
