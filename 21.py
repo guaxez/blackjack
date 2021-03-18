@@ -66,9 +66,10 @@ class Jogador():
         self.nome = nome
         self.mao = []
         self.dinheiro = 500
+        self.aposta = 0
     
     def status(self):
-        print('{} {} {}'.format(self.nome, self.dinheiro, self.mao))
+        print('{} $:{} AP:{} M:{}'.format(self.nome, self.dinheiro, self.aposta, self.mao))
     
     def mostra_mao(self):
         for c in self.mao:
@@ -84,8 +85,13 @@ class Jogador():
             elif c.numero > 1 and c.numero < 10:
                 valor += int(c.numero)
             else:
-                valor += 11 #o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta.
+                valor += 11 #o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta antes.
         return valor
+    
+    def apostar(self,valor=10):
+        self.dinheiro -= valor
+        self.aposta += valor
+        print(self.dinheiro)
 
 
 
@@ -99,7 +105,9 @@ print(b.tamanho_baralho())
 
 jogador = Jogador('Jogador')
 jogador.status()
+jogador.apostar()
 
 b.dar_carta(jogador)
 b.dar_carta(jogador)
 jogador.mostra_mao()
+
