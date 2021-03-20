@@ -70,10 +70,16 @@ class Baralho():
             self.dar_carta(quem)
         if participantes[0].valor_mao() > participantes[1].valor_mao():
             print('Banca vence!')
+            participantes[1].aposta = 0
         elif participantes[0].valor_mao() < participantes[1].valor_mao():
             print('Jogador vence!')
+            participantes[1].dinheiro += participantes[1].aposta * 2
+            participantes[1].aposta = 0
         else:
             print('Push')
+            participantes[1].dinheiro += participantes[1].aposta
+            participantes[1].aposta = 0
+        
 
 
 class Jogador():
@@ -126,4 +132,4 @@ jogador = Jogador('Jogador')
 jogador.status()
 
 bar.rodada([banca,jogador])
-
+jogador.status()
