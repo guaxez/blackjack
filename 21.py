@@ -52,7 +52,7 @@ class Baralho():
         random.shuffle(self.pilha)
     
     def tamanho_baralho(self):
-        return 'tamanho do baralho: {}'.format(len(b.pilha))
+        return 'tamanho do baralho: {}'.format(len(self.pilha))
     
     def dar_carta(self,quem):
         quem.mao.append(self.pilha[-1])
@@ -60,6 +60,21 @@ class Baralho():
         quem.valor = quem.valor_mao()
         print(self.tamanho_baralho())
         quem.status()
+    
+    def rodada(self,participantes):
+        quant = len(participantes)
+        participantes[1].apostar()
+        print('Dar cartas')
+        for quem in participantes:
+            self.dar_carta(quem)
+            self.dar_carta(quem)
+        if participantes[0].valor_mao() > participantes[1].valor_mao():
+            print('Banca vence!')
+        elif participantes[0].valor_mao() < participantes[1].valor_mao():
+            print('Jogador vence!')
+        else:
+            print('Push')
+
 
 class Jogador():
 
@@ -69,6 +84,7 @@ class Jogador():
         self.dinheiro = 500
         self.aposta = 0
         self.valor = 0
+        self.rodada = 'jogando'
     
     def status(self):
         print('{} $:{} AP:{} M:{} V:{}'.format(self.nome, self.dinheiro, self.aposta, self.mao,self.valor))
@@ -93,21 +109,21 @@ class Jogador():
     def apostar(self,valor=10):
         self.dinheiro -= valor
         self.aposta += valor
-
+        return valor
 
 
 
 # MAIN
 
 print('21')
-b = Baralho()
-b.embaralhar()
-print(b.tamanho_baralho())
+bar = Baralho()
+bar.embaralhar()
+print(bar.tamanho_baralho())
 
+banca = Jogador('Banca')
+banca.status()
 jogador = Jogador('Jogador')
 jogador.status()
-jogador.apostar()
 
-print('Dar cartas')
-b.dar_carta(jogador)
-b.dar_carta(jogador)
+bar.rodada([banca,jogador])
+
