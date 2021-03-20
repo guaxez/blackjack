@@ -70,24 +70,27 @@ class Baralho():
             self.dar_carta(quem)
         if participantes[0].valor_mao() > participantes[1].valor_mao():
             print('Banca vence!')
-            participantes[1].aposta = 0
+            participantes[1].reset_aposta()
+            participantes[0].reset_aposta()
         elif participantes[0].valor_mao() < participantes[1].valor_mao():
             print('Jogador vence!')
             participantes[1].dinheiro += participantes[1].aposta * 2
-            participantes[1].aposta = 0
+            participantes[1].reset_aposta()
+            participantes[0].reset_aposta()
         else:
             print('Push')
             participantes[1].dinheiro += participantes[1].aposta
-            participantes[1].aposta = 0
+            participantes[1].reset_aposta()
+            participantes[0].reset_aposta()
         
 
 
 class Jogador():
 
-    def __init__(self,nome):
+    def __init__(self,nome,dinheiro):
         self.nome = nome
         self.mao = []
-        self.dinheiro = 500
+        self.dinheiro = dinheiro
         self.aposta = 0
         self.valor = 0
         self.rodada = 'jogando'
@@ -116,6 +119,12 @@ class Jogador():
         self.dinheiro -= valor
         self.aposta += valor
         return valor
+    
+    def reset_aposta(self):
+        self.aposta = 0
+        self.mao = []
+        self.valor = 0
+        self.rodada = 'jogando'
 
 
 
@@ -126,10 +135,11 @@ bar = Baralho()
 bar.embaralhar()
 print(bar.tamanho_baralho())
 
-banca = Jogador('Banca')
+banca = Jogador('Banca',999999)
 banca.status()
-jogador = Jogador('Jogador')
+jogador = Jogador('Jogador',500)
 jogador.status()
 
 bar.rodada([banca,jogador])
 jogador.status()
+banca.status()

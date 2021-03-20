@@ -9,7 +9,7 @@ Jogo de Cartas 21
 - [40%] Baralho
 - [30%] Mão
 - [40%] Jogador
-- [10%] Rodadas
+- [30%] Rodadas
 - [] Menu
 
 # Log
