@@ -54,20 +54,29 @@ class Baralho():
     def tamanho_baralho(self):
         return 'tamanho do baralho: {}'.format(len(self.pilha))
     
-    def dar_carta(self,quem):
-        quem.mao.append(self.pilha[-1])
-        self.pilha.pop()
-        quem.valor = quem.valor_mao()
-        print(self.tamanho_baralho())
-        quem.status()
+    def dar_carta(self,quem,quantas=1):
+        for cartas in range(quantas):
+            quem.mao.append(self.pilha[-1])
+            self.pilha.pop()
+            quem.valor = quem.valor_mao()
+            print(self.tamanho_baralho())
     
     def rodada(self,participantes):
         quant = len(participantes)
         participantes[1].apostar()
         print('Dar cartas')
-        for quem in participantes:
-            self.dar_carta(quem)
-            self.dar_carta(quem)
+        self.dar_carta(participantes[0])
+        self.dar_carta(participantes[1],2)
+        print('Banca: [{}]: {}'.format(participantes[0].mao[0],participantes[0].valor))
+        print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
+        opcao = input('1-Carta/2-Ficar:')
+        while opcao == '1':
+            self.dar_carta(participantes[1])
+            print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
+            opcao = input('1-Carta/2-Ficar:')
+            if opcao == '2':
+                break
+        self.dar_carta(participantes[0])
         if participantes[0].valor_mao() > participantes[1].valor_mao():
             print('Banca vence!')
             participantes[1].reset_rodada()
@@ -83,7 +92,7 @@ class Baralho():
             participantes[1].reset_rodada()
             participantes[0].reset_rodada()
         
-
+        
 
 class Jogador():
 
@@ -99,7 +108,7 @@ class Jogador():
         print('{} $:{} AP:{} M:{} V:{}'.format(self.nome, self.dinheiro, self.aposta, self.mao,self.valor))
     
     def mostra_mao(self): # agora que eu mudei o __str__ das cartas para __repr__, acho que nao preciso mais disso. mas vou deixar por enquanto
-        for c in self.mao:
+        for c in self.mao: #talvez essa função ainda seja util, se eu arrumar ela. Como uma versão da func status. Mostrar x cartas e o valor delas.
             print(c)
         print(self.valor_mao())
         
