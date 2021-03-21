@@ -60,6 +60,8 @@ class Baralho():
             self.pilha.pop()
             quem.valor = quem.valor_mao()
             print(self.tamanho_baralho())
+            if quem.valor > 21:
+                quem.rodada = 'estourou'
     
     def rodada(self,participantes):
         quant = len(participantes)
@@ -76,8 +78,10 @@ class Baralho():
             opcao = input('1-Carta/2-Ficar:')
             if opcao == '2':
                 break
-        self.dar_carta(participantes[0])
-        if participantes[0].valor_mao() > participantes[1].valor_mao():
+        while participantes[0].valor < 17:
+            self.dar_carta(participantes[0])
+        print('Banca: [{}]: {}'.format(participantes[0].mao,participantes[0].valor))
+        if participantes[0].valor_mao() > participantes[1].valor_mao() or participantes[1].rodada == 'estourou':
             print('Banca vence!')
             participantes[1].reset_rodada()
             participantes[0].reset_rodada()
