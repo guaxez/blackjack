@@ -63,43 +63,46 @@ class Baralho():
             if quem.valor > 21:
                 quem.rodada = 'estourou'
     
-    def rodada(self,participantes):
+    def jogo(self,participantes): # falta arrumar as condições de vitórias
         quant = len(participantes)
-        opcao = input('Valor(int/x-sair):')
-        if opcao == 'x':
+        apostei = input('Valor(int/x-sair):')
+        if apostei == 'x':
             print('Volte Sempre!')
             return
-        participantes[1].apostar(int(opcao))
-        print('Dar cartas')
-        self.dar_carta(participantes[0])
-        self.dar_carta(participantes[1],2)
-        print('Banca: [{}]: {}'.format(participantes[0].mao[0],participantes[0].valor))
-        print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
-        opcao = input('1-Carta/2-Ficar:')
-        while opcao == '1' and participantes[1].valor <= 21:
-            self.dar_carta(participantes[1])
+        while apostei != 'x':
+            participantes[1].apostar(int(apostei))
+            print('Dar cartas')
+            self.dar_carta(participantes[0])
+            self.dar_carta(participantes[1],2)
+            print('Banca: [{}]: {}'.format(participantes[0].mao[0],participantes[0].valor))
             print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
             opcao = input('1-Carta/2-Ficar:')
-            if opcao == '2':
-                break
-        while participantes[0].valor < 17:
-            self.dar_carta(participantes[0])
-        print('Banca: [{}]: {}'.format(participantes[0].mao,participantes[0].valor))
-        if participantes[0].valor_mao() > participantes[1].valor_mao() or participantes[1].rodada == 'estourou':
-            print('Banca vence!')
-            participantes[1].reset_rodada()
-            participantes[0].reset_rodada()
-        elif participantes[0].valor_mao() < participantes[1].valor_mao():
-            print('Jogador vence!')
-            participantes[1].dinheiro += participantes[1].aposta * 2
-            participantes[1].reset_rodada()
-            participantes[0].reset_rodada()
-        else:
-            print('Push')
-            participantes[1].dinheiro += participantes[1].aposta
-            participantes[1].reset_rodada()
-            participantes[0].reset_rodada()
-        participantes[1].status()
+            while opcao == '1' and participantes[1].valor <= 21:
+                self.dar_carta(participantes[1])
+                print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
+                opcao = input('1-Carta/2-Ficar:')
+                if opcao == '2':
+                    break
+            while participantes[0].valor < 17:
+                self.dar_carta(participantes[0])
+            print('Banca: {}: {}'.format(participantes[0].mao,participantes[0].valor))
+            if participantes[0].valor_mao() > participantes[1].valor_mao() or participantes[1].rodada == 'estourou':
+                print('Banca vence!')
+                participantes[1].reset_rodada()
+                participantes[0].reset_rodada()
+            elif participantes[0].valor_mao() < participantes[1].valor_mao():
+                print('Jogador vence!')
+                participantes[1].dinheiro += participantes[1].aposta * 2
+                participantes[1].reset_rodada()
+                participantes[0].reset_rodada()
+            else:
+                print('Push')
+                participantes[1].dinheiro += participantes[1].aposta
+                participantes[1].reset_rodada()
+                participantes[0].reset_rodada()
+            participantes[1].status()
+            apostei = input('Valor(int/x-sair):')
+        print('Volte Sempre!')
         
         
 
@@ -159,4 +162,4 @@ banca.status()
 jogador = Jogador('Jogador',500)
 jogador.status()
 
-bar.rodada([banca,jogador])
+bar.jogo([banca,jogador])
