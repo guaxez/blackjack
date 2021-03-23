@@ -10,7 +10,7 @@ Jogo de Cartas 21
 - [30%] Mão
 - [40%] Jogador
 - [30%] Rodadas
-- [] Menu
+- [10%] Menu
 
 # Log
 
@@ -22,4 +22,9 @@ Quantos jogadores vão ser afinal? Pra um projeto simples, um ta bom eu acho.
 
 Preciso arrumar a questão do valor do Ás. Um jeito automático de ver o melhor valor possível da mão.
 
+Tenho que ver como eu vou fazer com a questão de renovar as cartas do baralho conforme elas vão sendo compradas
+
 Logo vou precisar de um menu interativo, e não sei se vale a pena fazer um pelo terminal. O ideal era usar o tkinter
+Por enquanto vai o terminal mesmo. Aprendendo coisas de linux agora que comecei a trabalhar, mostrou que pode ser interessante uma versão de terminal.
+
+Será que um dia isso aqui fica bonito igual os dos sites?

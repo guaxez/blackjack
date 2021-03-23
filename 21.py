@@ -65,14 +65,18 @@ class Baralho():
     
     def rodada(self,participantes):
         quant = len(participantes)
-        participantes[1].apostar()
+        opcao = input('Valor(int/x-sair):')
+        if opcao == 'x':
+            print('Volte Sempre!')
+            return
+        participantes[1].apostar(int(opcao))
         print('Dar cartas')
         self.dar_carta(participantes[0])
         self.dar_carta(participantes[1],2)
         print('Banca: [{}]: {}'.format(participantes[0].mao[0],participantes[0].valor))
         print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
         opcao = input('1-Carta/2-Ficar:')
-        while opcao == '1':
+        while opcao == '1' and participantes[1].valor <= 21:
             self.dar_carta(participantes[1])
             print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
             opcao = input('1-Carta/2-Ficar:')
@@ -95,6 +99,7 @@ class Baralho():
             participantes[1].dinheiro += participantes[1].aposta
             participantes[1].reset_rodada()
             participantes[0].reset_rodada()
+        participantes[1].status()
         
         
 
@@ -112,7 +117,7 @@ class Jogador():
         print('{} $:{} AP:{} M:{} V:{}'.format(self.nome, self.dinheiro, self.aposta, self.mao,self.valor))
     
     def mostra_mao(self): # agora que eu mudei o __str__ das cartas para __repr__, acho que nao preciso mais disso. mas vou deixar por enquanto
-        for c in self.mao: #talvez essa função ainda seja util, se eu arrumar ela. Como uma versão da func status. Mostrar x cartas e o valor delas.
+        for c in self.mao: # talvez essa função ainda seja util, se eu arrumar ela. Como uma versão da func status. Mostrar x cartas e o valor delas.
             print(c)
         print(self.valor_mao())
         
@@ -142,6 +147,7 @@ class Jogador():
 
 
 # MAIN
+# é preciso fazer uma forma de reiniciar o baralho quando ele estiver 
 
 print('21')
 bar = Baralho()
@@ -154,5 +160,3 @@ jogador = Jogador('Jogador',500)
 jogador.status()
 
 bar.rodada([banca,jogador])
-jogador.status()
-banca.status()
