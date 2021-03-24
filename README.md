@@ -22,6 +22,9 @@ Quantos jogadores vão ser afinal? Pra um projeto simples, um ta bom eu acho.
 
 Preciso arrumar a questão do valor do Ás. Um jeito automático de ver o melhor valor possível da mão.
 
+Tenho que acertar a questão da codição de vitória. Qual devem ser os passos lógicos a serem seguidos? O objetivo do jogo, é 
+vencer a banca. Qual é o primeiro passo, verificar quem perdeu? A banca ou o jogador? ou ambos? Ou verificar quem tem o insta 21?
+
 Tenho que ver como eu vou fazer com a questão de renovar as cartas do baralho conforme elas vão sendo compradas
 
 Logo vou precisar de um menu interativo, e não sei se vale a pena fazer um pelo terminal. O ideal era usar o tkinter
