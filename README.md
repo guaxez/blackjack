@@ -25,6 +25,8 @@ Preciso arrumar a questão do valor do Ás. Um jeito automático de ver o melhor
 Tenho que acertar a questão da codição de vitória. Qual devem ser os passos lógicos a serem seguidos? O objetivo do jogo, é 
 vencer a banca. Qual é o primeiro passo, verificar quem perdeu? A banca ou o jogador? ou ambos? Ou verificar quem tem o insta 21?
 
+Fui ler a regras do jogo e lembrei que existem várias ações que podem ser tomadas. Mas vamos implementar o jogo uma coisa de cada vez.
+
 Tenho que ver como eu vou fazer com a questão de renovar as cartas do baralho conforme elas vão sendo compradas
 
 Logo vou precisar de um menu interativo, e não sei se vale a pena fazer um pelo terminal. O ideal era usar o tkinter

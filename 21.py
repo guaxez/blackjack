@@ -62,10 +62,12 @@ class Baralho():
             self.pilha.pop()
 
             quem.valor = quem.valor_mao()
-
-            print(self.tamanho_baralho())
             if quem.valor > 21:
                 quem.rodada = 'estourou'
+            print(quem.nome,quem.mao,quem.rodada)
+
+            print(self.tamanho_baralho())
+
     
     def jogo(self,participantes): # falta arrumar as condições de vitórias
         quant = len(participantes)
@@ -81,12 +83,12 @@ class Baralho():
             self.dar_carta(participantes[0])
             self.dar_carta(participantes[1],2)
             print('Banca: [{}]: {}'.format(participantes[0].mao[0],participantes[0].valor))
-            print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
+            print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
 
             opcao = input('1-Carta/2-Ficar:')
-            while opcao == '1' and participantes[1].valor >= 21:
+            while opcao == '1' and participantes[1].valor <= 21:
                 self.dar_carta(participantes[1])
-                print('Jogador: {}: {}'.format(participantes[1].mao,participantes[1].valor))
+                print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
                 opcao = input('1-Carta/2-Ficar:')
                 if opcao == '2':
                     break
@@ -94,17 +96,13 @@ class Baralho():
             print('Cartas da Banca')
             while participantes[0].valor < 17:
                 self.dar_carta(participantes[0])
-            print('Banca: {}: {}'.format(participantes[0].mao,participantes[0].valor))
-
-            if participantes[0].rodada == 'estourou':
-                pass
-                
-
-            if participantes[0].valor_mao() > participantes[1].valor_mao() or participantes[1].rodada == 'estourou':
+            print('Banca: {}: {}. {}.'.format(participantes[0].mao,participantes[0].valor, participantes[0].rodada))
+            
+            if (participantes[0].valor_mao() > participantes[1].valor_mao() and participantes[0].rodada != 'estourou') or (participantes[1].rodada == 'estourou' and participantes[0].rodada == 'jogando'):
                 print('Banca vence!')
                 participantes[1].reset_rodada()
                 participantes[0].reset_rodada()
-            elif participantes[0].valor_mao() < participantes[1].valor_mao():
+            elif (participantes[0].rodada == 'estourou' and participantes[1].valor <= 21) or (participantes[1].valor > participantes[0].valor):
                 print('Jogador vence!')
                 participantes[1].dinheiro += participantes[1].aposta * 2
                 participantes[1].reset_rodada()
@@ -119,7 +117,6 @@ class Baralho():
         print('Volte Sempre!')
         
         
-
 class Jogador():
 
     def __init__(self,nome,dinheiro):
