@@ -31,5 +31,9 @@ Tenho que ver como eu vou fazer com a questão de renovar as cartas do baralho c
 
 Logo vou precisar de um menu interativo, e não sei se vale a pena fazer um pelo terminal. O ideal era usar o tkinter
 Por enquanto vai o terminal mesmo. Aprendendo coisas de linux agora que comecei a trabalhar, mostrou que pode ser interessante uma versão de terminal.
+Talvez hoje, 26/3/21, eu tenha conseguido uma primeira versão pelo terminal. Divertidinho.
+Mas se eu quiser transformar numa versão com GUI, vou precisar adaptar todas as funções.
+Provavelmente desmembrar a função jogo atual também.
 
 Será que um dia isso aqui fica bonito igual os dos sites?
+

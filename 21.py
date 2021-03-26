@@ -45,6 +45,8 @@ class Baralho():
         for i in ('O','E','C','P'):
             for j in range(1,14):
                 self.pilha.append(Carta(j,i))
+        
+        self.embaralhar()
     
     def mostrar_baralho(self):
         for k in self.pilha:
@@ -64,20 +66,23 @@ class Baralho():
             quem.valor = quem.valor_mao()
             if quem.valor > 21:
                 quem.rodada = 'estourou'
-            print(quem.nome,quem.mao,quem.rodada)
+            print(quem.nome,quem.valor,quem.mao,quem.rodada)
 
             print(self.tamanho_baralho())
 
     
     def jogo(self,participantes): # falta arrumar as condições de vitórias
         quant = len(participantes)
+        print('*'*30)
 
-        apostei = input('Valor(int/x-sair):')
+        apostei = input('Valor da aposta(int/x-sair): ')
         if apostei == 'x':
             print('Volte Sempre!')
             return
         while apostei != 'x':
             participantes[1].apostar(int(apostei))
+
+            print('*'*30)
 
             print('Dar cartas')
             self.dar_carta(participantes[0])
@@ -85,20 +90,28 @@ class Baralho():
             print('Banca: [{}]: {}'.format(participantes[0].mao[0],participantes[0].valor))
             print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
 
-            opcao = input('1-Carta/2-Ficar:')
+            print('-'*30)
+
+            opcao = input('1-Carta/2-Ficar: ')
             while opcao == '1' and participantes[1].valor <= 21:
                 self.dar_carta(participantes[1])
                 print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
-                opcao = input('1-Carta/2-Ficar:')
+                if participantes[1].valor > 21:
+                    break
+                opcao = input('1-Carta/2-Ficar: ')
                 if opcao == '2':
                     break
+            
+            print('-'*30)
             
             print('Cartas da Banca')
             while participantes[0].valor < 17:
                 self.dar_carta(participantes[0])
-            print('Banca: {}: {}. {}.'.format(participantes[0].mao,participantes[0].valor, participantes[0].rodada))
+            print('Banca: {}: {} {}'.format(participantes[0].mao,participantes[0].valor, participantes[0].rodada))
+
+            print('Banca: {} | Jogador: {}'.format(participantes[0].valor,participantes[1].valor))
             
-            if (participantes[0].valor_mao() > participantes[1].valor_mao() and participantes[0].rodada != 'estourou') or (participantes[1].rodada == 'estourou' and participantes[0].rodada == 'jogando'):
+            if (participantes[0].valor > participantes[1].valor and participantes[0].rodada != 'estourou') or (participantes[1].rodada == 'estourou' and participantes[0].rodada == 'jogando'):
                 print('Banca vence!')
                 participantes[1].reset_rodada()
                 participantes[0].reset_rodada()
@@ -113,7 +126,16 @@ class Baralho():
                 participantes[1].reset_rodada()
                 participantes[0].reset_rodada()
             participantes[1].status()
-            apostei = input('Valor(int/x-sair):')
+
+            if len(self.pilha) < 31:
+                print('Iniciando novo baralho.')
+                self.pilha = []
+                self.__init__()
+                print(self.tamanho_baralho())
+
+            print('*'*30)
+
+            apostei = input('Valor da aposta(int/x-sair): ')
         print('Volte Sempre!')
         
         
@@ -161,9 +183,8 @@ class Jogador():
 
 
 # MAIN
-# é preciso fazer uma forma de reiniciar o baralho quando ele estiver 
 
-print('21')
+print('21 - Blackjack')
 bar = Baralho()
 bar.embaralhar()
 print(bar.tamanho_baralho())
