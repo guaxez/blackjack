@@ -184,14 +184,15 @@ class Jogador():
 
 # MAIN
 
-print('21 - Blackjack')
-bar = Baralho()
-bar.embaralhar()
-print(bar.tamanho_baralho())
+if __name__ == '__main__':
+    print('21 - Blackjack')
+    bar = Baralho()
+    bar.embaralhar()
+    print(bar.tamanho_baralho())
 
-banca = Jogador('Banca',999999)
-banca.status()
-jogador = Jogador('Jogador',500)
-jogador.status()
+    banca = Jogador('Banca',999999)
+    banca.status()
+    jogador = Jogador('Jogador',500)
+    jogador.status()
 
-bar.jogo([banca,jogador])
+    bar.jogo([banca,jogador])
