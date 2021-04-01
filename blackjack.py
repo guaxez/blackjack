@@ -164,9 +164,16 @@ class Jogador():
             if c.numero >= 10:
                 valor += 10
             elif c.numero > 1 and c.numero < 10:
-                valor += int(c.numero)
+                valor += c.numero
             else:
-                valor += 11 # o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta antes.
+                if valor < 11:
+                    valor += 11 # o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta antes.
+                elif valor > 11:
+                    valor += 1
+        
+        if (valor == 21):
+            self.rodada = 'blackjack'
+
         return valor
     
     def apostar(self,valor=10):
