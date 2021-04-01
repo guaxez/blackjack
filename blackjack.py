@@ -167,9 +167,9 @@ class Jogador():
                 valor += c.numero
             else:
                 if valor < 11:
-                    valor += 11 # o ás pode ser 1 ou 11, tenho que resolver isso. Acho melhor desenvolver a aposta antes.
-                elif valor > 11:
-                    valor += 1
+                    valor += 11  # Ainda acho que falta algo no algoritmo, por exemplo se você comprar o ás na primeira carta mas
+                elif valor > 11: # você compra mais cartas. Como seria possível mudar o valor de um ás no começo da mão?
+                    valor += 1   # Tentei arrumar isso agora a pouco, mas acabei quebrando o código, e nem sabia como arrumar.
         
         if (valor == 21):
             self.rodada = 'blackjack'
