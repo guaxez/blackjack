@@ -12,6 +12,10 @@ Jogo de Cartas 21
 - [30%] Rodadas
 - [10%] Menu
 
+# Regras
+
+O objetivo do jogo é vencer a BANCA.
+No jogo ações possíveis são COMPRAR ou FICAR.
 # Log
 
 Formatei meu PC e perdi os arquivos do curso de python. Vou tentar replicar o projeto final, agora com uso do tkinter.
@@ -25,8 +29,13 @@ Arrumei um pouco a função que lê o valor da mão, mas ainda preciso arrumar a
 a primeira carta da mão, mas que depois de comprar 1 ou duas cartas, o valor dele precisaria ser alterado para 1 ou invés de 11, devido
 o problema de estourar o valor da mão acima de 21.
 
-Tenho que acertar a questão da codição de vitória. Qual devem ser os passos lógicos a serem seguidos? O objetivo do jogo, é 
+Tenho que acertar a questão da codição de vitória. Qual devem ser os passos lógicos a serem seguidos? O objetivo do jogo é 
 vencer a banca. Qual é o primeiro passo, verificar quem perdeu? A banca ou o jogador? ou ambos? Ou verificar quem tem o insta 21?
+Está na hora de decidir isso. 
+No jogo ações possíveis são COMPRAR ou FICAR.
+Você só pode comprar se tiver menos de 21. (E não deve comprar acima de 17? Para a banca sim, para o jogador, é uma "recomendação")
+Caso o jogador estoure, qual ação deve ser tomada? Dar apenas uma carta para a banca certo? Falta implementar isso. Mas é só uma carta?
+Ou até a banca ter 17 ou mais?
 
 Fui ler a regras do jogo e lembrei que existem várias ações que podem ser tomadas. Mas vamos implementar o jogo uma coisa de cada vez.
 

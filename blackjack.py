@@ -71,7 +71,7 @@ class Baralho():
             print(self.tamanho_baralho())
 
     
-    def jogo(self,participantes): # falta arrumar as condições de vitórias
+    def jogoTerminal(self,participantes): # falta arrumar as condições de vitórias
         quant = len(participantes)
         print('*'*30)
 
@@ -109,19 +109,23 @@ class Baralho():
                 self.dar_carta(participantes[0])
             print('Banca: {}: {} {}'.format(participantes[0].mao,participantes[0].valor, participantes[0].rodada))
 
+            # BUG: Banca 21 e jogador > 21 e jogador vence
+            # BUG: Dois bust e jogador vence
+            # BUG: Duplo blackjack não dá push instantâneo
+            # Bem eu claramente preciso revisar o esquema de win condition
             print('Banca: {} | Jogador: {}'.format(participantes[0].valor,participantes[1].valor))
             
             if (participantes[0].valor > participantes[1].valor and participantes[0].rodada != 'estourou') or (participantes[1].rodada == 'estourou' and participantes[0].rodada == 'jogando'):
-                print('Banca vence!')
+                print('BANCA vence!')
                 participantes[1].reset_rodada()
                 participantes[0].reset_rodada()
             elif (participantes[0].rodada == 'estourou' and participantes[1].valor <= 21) or (participantes[1].valor > participantes[0].valor):
-                print('Jogador vence!')
+                print('JOGADOR vence!')
                 participantes[1].dinheiro += participantes[1].aposta * 2
                 participantes[1].reset_rodada()
                 participantes[0].reset_rodada()
             else:
-                print('Push')
+                print('PUSH')
                 participantes[1].dinheiro += participantes[1].aposta
                 participantes[1].reset_rodada()
                 participantes[0].reset_rodada()
@@ -160,16 +164,22 @@ class Jogador():
     
     def valor_mao(self):
         valor = 0
+
+        qtd_as = 0
         for c in self.mao:
             if c.numero >= 10:
                 valor += 10
             elif c.numero > 1 and c.numero < 10:
                 valor += c.numero
             else:
-                if valor < 11:
-                    valor += 11  # Ainda acho que falta algo no algoritmo, por exemplo se você comprar o ás na primeira carta mas
-                elif valor > 11: # você compra mais cartas. Como seria possível mudar o valor de um ás no começo da mão?
-                    valor += 1   # Tentei arrumar isso agora a pouco, mas acabei quebrando o código, e nem sabia como arrumar.
+                qtd_as += 1
+        for a in range(qtd_as):
+            if valor < 11:
+                valor += 11  # Ainda acho que falta algo no algoritmo, por exemplo se você comprar o ás na primeira carta mas
+            elif valor > 11: # você compra mais cartas. Como seria possível mudar o valor de um ás no começo da mão?
+                valor += 1   # Tentei arrumar isso agora a pouco, mas acabei quebrando o código, e nem sabia como arrumar.
+                             # Acho que consgui arrumar. Vou fazer uns testes.
+        
         
         if (valor == 21):
             self.rodada = 'blackjack'
@@ -189,7 +199,6 @@ class Jogador():
 
 
 
-# MAIN
 
 if __name__ == '__main__':
     print('21 - Blackjack')
@@ -202,4 +211,4 @@ if __name__ == '__main__':
     jogador = Jogador('Jogador',500)
     jogador.status()
 
-    bar.jogo([banca,jogador])
+    bar.jogoTerminal([banca,jogador])
