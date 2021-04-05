@@ -92,15 +92,17 @@ class Baralho():
 
             print('-'*30)
 
-            opcao = input('1-Carta/2-Ficar: ')
-            while opcao == '1' and participantes[1].valor <= 21:
-                self.dar_carta(participantes[1])
-                print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
-                if participantes[1].valor > 21:
-                    break
+            
+            while participantes[1].valor < 21:
                 opcao = input('1-Carta/2-Ficar: ')
                 if opcao == '2':
                     break
+                elif participantes[1].valor > 21:
+                    break
+                elif opcao == '1':
+                    self.dar_carta(participantes[1])
+                print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
+                
             
             print('-'*30)
             
