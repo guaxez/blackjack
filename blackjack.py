@@ -39,12 +39,13 @@ class Carta():
 
 class Baralho():
 
-    def __init__(self):
+    def __init__(self,num_decks=1):
         self.pilha = []
         
-        for i in ('O','E','C','P'):
-            for j in range(1,14):
-                self.pilha.append(Carta(j,i))
+        for i in range(num_decks):
+            for j in ('O','E','C','P'):
+                for k in range(1,14):
+                    self.pilha.append(Carta(k,j))
         
         self.embaralhar()
     
@@ -56,7 +57,7 @@ class Baralho():
         random.shuffle(self.pilha)
     
     def tamanho_baralho(self):
-        return 'tamanho do baralho: {}'.format(len(self.pilha))
+        return '{}'.format(len(self.pilha))
     
     def dar_carta(self,quem,quantas=1):
         for cartas in range(quantas):
@@ -66,9 +67,11 @@ class Baralho():
             quem.valor = quem.valor_mao()
             if quem.valor > 21:
                 quem.rodada = 'estourou'
-            print(quem.nome,quem.valor,quem.mao,quem.rodada)
+            elif quem.valor == 21:
+                quem.rodada = 'blackjack'
+            print(quem.nome,quem.valor,quem.rodada,quem.mao)
 
-            print(self.tamanho_baralho())
+            print(self.tamanho_baralho(),'cartas')
 
     
     def jogoTerminal(self,participantes): # falta arrumar as condições de vitórias
@@ -80,42 +83,44 @@ class Baralho():
             print('Volte Sempre!')
             return
         while apostei != 'x':
-            participantes[1].apostar(int(apostei))
+            participantes[1].apostar(int(apostei)) # falta verificar se o valor de entrada é válido.
 
             print('*'*30)
 
-            print('Dar cartas')
+            print('Dar cartas iniciais')
             self.dar_carta(participantes[0])
             self.dar_carta(participantes[1],2)
-            print('Banca: [{}]: {}'.format(participantes[0].mao[0],participantes[0].valor))
-            print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
+            print('Banca: {}: [{}]'.format(participantes[0].valor,participantes[0].mao[0]))
+            print('Jogador: {} {}: {}'.format(participantes[1].valor,participantes[1].rodada,participantes[1].mao))
 
             print('-'*30)
+
+            print('Cartas do jogador')
 
             
             while participantes[1].valor < 21:
                 opcao = input('1-Carta/2-Ficar: ')
-                if opcao == '2':
-                    break
-                elif participantes[1].valor > 21:
+                if opcao == '2' or (participantes[1].valor > 21):
                     break
                 elif opcao == '1':
                     self.dar_carta(participantes[1])
-                print('Jogador: {}: {} {}'.format(participantes[1].mao,participantes[1].valor,participantes[1].rodada))
                 
             
             print('-'*30)
             
             print('Cartas da Banca')
-            while participantes[0].valor < 17:
-                self.dar_carta(participantes[0])
-            print('Banca: {}: {} {}'.format(participantes[0].mao,participantes[0].valor, participantes[0].rodada))
 
+            if participantes[1].rodada == 'estourou':
+                self.dar_carta(participantes[0])
+            else:
+                while participantes[0].valor < 17:
+                    self.dar_carta(participantes[0])
+            
+            print('Banca: {} | Jogador: {}'.format(participantes[0].valor,participantes[1].valor))
             # BUG: Banca 21 e jogador > 21 e jogador vence
             # BUG: Dois bust e jogador vence
             # BUG: Duplo blackjack não dá push instantâneo
             # Bem eu claramente preciso revisar o esquema de win condition
-            print('Banca: {} | Jogador: {}'.format(participantes[0].valor,participantes[1].valor))
             
             if (participantes[0].valor > participantes[1].valor and participantes[0].rodada != 'estourou') or (participantes[1].rodada == 'estourou' and participantes[0].rodada == 'jogando'):
                 print('BANCA vence!')
@@ -133,11 +138,11 @@ class Baralho():
                 participantes[0].reset_rodada()
             participantes[1].status()
 
-            if len(self.pilha) < 31:
+            if len(self.pilha) <= ((len(self.pilha) / 2)+1):
                 print('Iniciando novo baralho.')
                 self.pilha = []
                 self.__init__()
-                print(self.tamanho_baralho())
+                print(self.tamanho_baralho(),'cartas')
 
             print('*'*30)
 
@@ -166,8 +171,8 @@ class Jogador():
     
     def valor_mao(self):
         valor = 0
-
         qtd_as = 0
+
         for c in self.mao:
             if c.numero >= 10:
                 valor += 10
@@ -175,14 +180,14 @@ class Jogador():
                 valor += c.numero
             else:
                 qtd_as += 1
+
         for a in range(qtd_as):
-            if valor < 11:
+            if valor < 11 and (valor + qtd_as < 21):
                 valor += 11  # Ainda acho que falta algo no algoritmo, por exemplo se você comprar o ás na primeira carta mas
-            elif valor > 11: # você compra mais cartas. Como seria possível mudar o valor de um ás no começo da mão?
+            else:            # você compra mais cartas. Como seria possível mudar o valor de um ás no começo da mão?
                 valor += 1   # Tentei arrumar isso agora a pouco, mas acabei quebrando o código, e nem sabia como arrumar.
                              # Acho que consgui arrumar. Vou fazer uns testes.
-        
-        
+                             # Comprei um oito um dois e dois ás e deu 22.O primeiro ás Devia virar 1 antes de estourar       
         if (valor == 21):
             self.rodada = 'blackjack'
 
@@ -204,12 +209,11 @@ class Jogador():
 
 if __name__ == '__main__':
     print('21 - Blackjack')
-    bar = Baralho()
-    bar.embaralhar()
-    print(bar.tamanho_baralho())
+
+    bar = Baralho(2)
+    print(bar.tamanho_baralho(),'cartas')
 
     banca = Jogador('Banca',999999)
-    banca.status()
     jogador = Jogador('Jogador',500)
     jogador.status()
 
