@@ -51,5 +51,7 @@ Por enquanto vai o terminal mesmo. Aprendendo coisas de linux agora que comecei 
 Mas se eu quiser transformar numa versão com GUI, vou precisar adaptar todas as funções.
 Provavelmente desmembrar a função jogo atual também.
 
+Preciso rever a questão do esquema de arquivos do projeto. Não sei se precisa de pycache e init.py
+
 Será que um dia isso aqui fica bonito igual os dos sites?
 
