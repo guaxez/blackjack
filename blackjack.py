@@ -72,9 +72,26 @@ class Baralho():
             print(quem.nome,quem.valor,quem.rodada,quem.mao)
 
             print(self.tamanho_baralho(),'cartas')
-
     
-    def jogoTerminal(self,participantes): # falta arrumar as condições de vitórias
+    def vencedor(self, jogadores):
+        if jogadores[0].valor > 21:
+            if jogadores[1].valor > 21:
+                return('ESTOUROU')
+            elif jogadores[1].valor <= 21:
+                jogadores[1].dinheiro += jogadores[1].aposta
+                return('VITÓRIA')
+        if jogadores[1].valor > 21:
+            return('ESTOUROU')
+        elif jogadores[0].valor == jogadores[1].valor:
+            jogadores[1].dinheiro += jogadores[1].aposta
+            return('PUSH')
+        elif jogadores[0].valor < jogadores[1].valor:
+            jogadores[1].dinheiro += jogadores[1].aposta * 2
+            return('VITÓRIA')
+        else:
+            return('BANCA VENCE')
+    
+    def jogoTerminal(self,participantes):
         quant = len(participantes)
         print('*'*30)
 
@@ -120,28 +137,18 @@ class Baralho():
             # BUG: Banca 21 e jogador > 21 e jogador vence
             # BUG: Dois bust e jogador vence
             # BUG: Duplo blackjack não dá push instantâneo
-            # Bem eu claramente preciso revisar o esquema de win condition
+            # Bem eu claramente preciso revisar o esquema de win condition. Mudei bastante será que deu? Preciso testar.
             
-            if (participantes[0].valor > participantes[1].valor and participantes[0].rodada != 'estourou') or (participantes[1].rodada == 'estourou' and participantes[0].rodada == 'jogando'):
-                print('BANCA vence!')
-                participantes[1].reset_rodada()
-                participantes[0].reset_rodada()
-            elif (participantes[0].rodada == 'estourou' and participantes[1].valor <= 21) or (participantes[1].valor > participantes[0].valor):
-                print('JOGADOR vence!')
-                participantes[1].dinheiro += participantes[1].aposta * 2
-                participantes[1].reset_rodada()
-                participantes[0].reset_rodada()
-            else:
-                print('PUSH')
-                participantes[1].dinheiro += participantes[1].aposta
-                participantes[1].reset_rodada()
-                participantes[0].reset_rodada()
+            print(self.vencedor(participantes))
+
+            participantes[0].reset_rodada()
+            participantes[1].reset_rodada()
             participantes[1].status()
 
-            if len(self.pilha) <= ((len(self.pilha) / 2)+1):
+            if len(self.pilha) <= 52: # não consigo fazer 'if len(self.pilha) <= (len(self.pilha) / 2)'
                 print('Iniciando novo baralho.')
                 self.pilha = []
-                self.__init__()
+                self.__init__(2)
                 print(self.tamanho_baralho(),'cartas')
 
             print('*'*30)
@@ -159,6 +166,9 @@ class Jogador():
         self.aposta = 0
         self.valor = 0
         self.rodada = 'jogando'
+    
+    def __repr__(self):
+        return self.nome
     
     def status(self):
         print('{} $:{} AP:{} M:{} V:{}'.format(self.nome, self.dinheiro, self.aposta, self.mao,self.valor))
@@ -187,7 +197,7 @@ class Jogador():
             else:            # você compra mais cartas. Como seria possível mudar o valor de um ás no começo da mão?
                 valor += 1   # Tentei arrumar isso agora a pouco, mas acabei quebrando o código, e nem sabia como arrumar.
                              # Acho que consgui arrumar. Vou fazer uns testes.
-                             # Comprei um oito um dois e dois ás e deu 22.O primeiro ás Devia virar 1 antes de estourar       
+                             # Comprei um oito um dois e dois ás e deu 22.O primeiro ás Devia virar 1 antes de estourar. Nem sei mais se essa porra ta arrumada ou não      
         if (valor == 21):
             self.rodada = 'blackjack'
 
